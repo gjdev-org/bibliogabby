@@ -30,15 +30,8 @@
 <a class="chip chip-simple" href="#" id="latest-link">
   <span class="chip-label" id="latest-chip">Caricamento...</span>
 </a>
-
 <script>
-  const feedUrl = 'https://onlygabbyme.substack.com/feed'; // URL del feed RSS
-  const latestTitle = document.getElementById('latest-title');
-  const latestDescription = document.getElementById('latest-description');
-  const latestLink = document.getElementById('latest-link');
-  const latestChip = document.getElementById('latest-chip');
-
-  fetch(feedUrl)
+  fetch("https://onlygabbyme.substack.com/feed")
     .then(response => response.text())
     .then(str => {
       const parser = new DOMParser();
@@ -48,14 +41,13 @@
       const link = latestPost.querySelector("link").textContent;
       const description = latestPost.querySelector("description").textContent;
 
-      latestTitle.textContent = title;
-      latestDescription.textContent = description;
-      latestLink.href = link;
-      latestChip.textContent = "Leggi il post";
+      // Sostituire il contenuto HTML
+      document.getElementById("latest-title").textContent = title;
+      document.getElementById("latest-description").textContent = description;
+      document.getElementById("latest-link").href = link;
     })
-    .catch(error => console.error('Errore nel recupero del feed:', error));
+    .catch(error => console.error("Errore nel recupero del feed:", error));
 </script>
-
                   <a class="read-more pb-3" href="#">
                     <span class="text">Tutte le novità</span>
                     <svg class="icon">
