@@ -9,7 +9,6 @@
 </head>
 <body>
   {%- include header/header.html -%}
-      <h1 class="visually-hidden" id="main-container">Noe del comune</h1>
       <section id="head-section">
         <h2 class="visually-hidden">Contenuti in evidenza</h2>
         <div class="container">
@@ -24,15 +23,39 @@
                     <span class="title-xsmall-semi-bold fw-semibold">Notizie</span>
                     <span class="data fw-normal">18 mag 2022</span>
                   </div>
-                  <a href="#" class="text-decoration-none">
-                    <h3 class="card-title">Parte l'estate con oltre 300 eventi in centro e nei quartieri, tutti gli eventi previsti
-                    </h3>
-                  </a>
-                  <p class="mb-4 pt-3 lora"><strong>Inaugurazione lunedì 2 luglio</strong> con il concerto
-                    gratuito in piazza XX Settembre degli Sweet Soul Music Revue. Sul palco 20 musicisti dal tutto il mondo</p>
-                  <a class="chip chip-simple" href="#">
-                    <span class="chip-label">Estate in città</span>
-                  </a>
+<a href="#" class="text-decoration-none">
+  <h3 class="card-title" id="latest-title">Caricamento...</h3>
+</a>
+<p class="mb-4 pt-3 lora" id="latest-description">Caricamento...</p>
+<a class="chip chip-simple" href="#" id="latest-link">
+  <span class="chip-label" id="latest-chip">Caricamento...</span>
+</a>
+
+<script>
+  const feedUrl = 'https://onlygabbyme.substack.com/feed'; // URL del feed RSS
+  const latestTitle = document.getElementById('latest-title');
+  const latestDescription = document.getElementById('latest-description');
+  const latestLink = document.getElementById('latest-link');
+  const latestChip = document.getElementById('latest-chip');
+
+  fetch(feedUrl)
+    .then(response => response.text())
+    .then(str => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(str, "application/xml");
+      const latestPost = xmlDoc.querySelector("item");
+      const title = latestPost.querySelector("title").textContent;
+      const link = latestPost.querySelector("link").textContent;
+      const description = latestPost.querySelector("description").textContent;
+
+      latestTitle.textContent = title;
+      latestDescription.textContent = description;
+      latestLink.href = link;
+      latestChip.textContent = "Leggi il post";
+    })
+    .catch(error => console.error('Errore nel recupero del feed:', error));
+</script>
+
                   <a class="read-more pb-3" href="#">
                     <span class="text">Tutte le novità</span>
                     <svg class="icon">
@@ -43,7 +66,7 @@
               </div>
             </div>
             <div class="col-lg-6 order-1 order-lg-2 px-0 px-lg-3">
-              <img src="https://picsum.photos/800/600" title="titolo immagine" alt="descrizione immagine" class="img-fluid">
+              <img src="https://substackcdn.com/image/fetch/w_1272,h_715,c_fill,f_webp,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F519a66e9-6fbb-4319-aece-f59dded87094_1073x763.jpeg" title="titolo immagine" alt="descrizione immagine" class="img-fluid">
             </div>
           </div>
         </div>
